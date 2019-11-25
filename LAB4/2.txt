@@ -1,0 +1,194 @@
+from Node import Node
+class LinkedList:
+    def __init__(self, head=None):
+        self.head = head
+
+    def size(self):
+        temp = self.head
+        length = 0
+        while temp != None:
+            length += 1
+            temp = temp.next
+        return length
+
+    def isEmpty(self):
+        return self.size() == 0
+
+    def append(self, data):
+        if(self.head == None):
+            self.head = data
+        else:
+            temp = self.head
+            while True:
+                if temp.next == None:
+                    temp.next = data
+                    break
+                temp = temp.next
+
+    def addHead(self, data):
+        if(self.head == None):
+            self.head = data
+        else:
+            data.next = self.head
+            self.head = data
+
+    def isIn(self, data):
+        temp = self.head
+        found = False
+        while temp != None:
+            if(temp.data == data):
+                found = True
+                break
+            temp = temp.next
+        return found
+  
+    def before(self, data):
+        check = data
+        temp = self.head
+        count = 0
+        if self.isIn(data):
+            while (temp.data != check):
+                count += 1
+                temp = temp.next
+            temp = self.head
+            for i in range(0,count-1):
+                temp = temp.next
+            if temp != None:
+                print("Found is ",end='')
+                print(temp)
+        else:
+            print("Not Found")
+
+    def remove(self, data):
+        if self.isIn(data):   
+            select = None
+            pointer = self.head
+            b4point = None
+            aftpoint = None
+            while pointer.data != data:
+                check = pointer
+                b4point = pointer
+                pointer = pointer.next
+                aftpoint = pointer.next
+            b4point.setNext(aftpoint)
+        else:
+            print("Data isn't in Linkedlist")
+
+    
+
+    def removeTail(self):
+        tail = None
+        if self.head != None:
+            if self.head.next == None:
+                tail = self.head
+                self.head = None
+            else:
+                temp = self.head
+                while temp.next.next != None:
+                    temp = temp.next
+                tail = temp.next
+                temp.next = None
+        return tail
+
+    def getTail(self):
+        tail = None
+        tail = self.head
+        while tail.next != None:
+            tail = tail.next
+        return tail
+    
+    def getHead(self):
+        tail = self.head
+        if self.head != None:
+            tail = self.head
+        return tail
+
+    def removeHead(self):
+        tail = self.head
+        if self.head != None:
+            self.head = self.head.next
+        return tail
+
+    def __str__(self):
+        temp = self.head
+        str = ''
+        while temp != None:
+            str += temp.data + ' '
+            temp = temp.next
+        return str
+    
+    def headtotail(self):
+        head = self.removeHead()
+        tail = self.getTail()
+        head.setNext()
+        tail.setNext(head)
+
+    def tailtohead(self):
+        tail = self.removeTail()
+        self.addHead(tail)
+
+    def tail_insert(self, length):
+        pointer = self.head
+        tail = self.getTail()
+        self.removeTail()
+        length = length - 1
+        count = 0
+        while True:
+            if count == length-1:
+                keep = pointer.next
+                pointer = self.head
+                length -= 1
+                count = 0
+                tail.setNext(keep.next)
+                keep.setNext(tail)
+                break
+            pointer = pointer.next
+            count += 1
+    
+    def tail_insert_no_more(self):
+        tail = self.getTail()
+        self.removeTail()
+        head = self.getHead()
+        next = head.next
+        tail.setNext(next)
+        head.setNext(tail)
+
+    def find_data_insert(self, length):
+        pointer = self.head
+        next_pointer = pointer.next
+        data_insert = None
+        P = self.head
+        count = 0
+        while count < length:
+            P = P.next
+            count += 1
+        data_insert = P
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+        # pointer = self.head
+        # del_pointer = pointer.next
+        # next_pointer = del_pointer.next
+        # count = 0
+        # while count < length:
+        #     pointer.setNext(next_pointer)
+        #     del_pointer.setNext()
+        #     tail = self.getTail()
+        #     tail.setNext(del_pointer)
+        #     pointer = pointer.next
+        #     del_pointer = pointer.next
+        #     next_pointer = del_pointer.next
+        #     count += 1
+
+        
+

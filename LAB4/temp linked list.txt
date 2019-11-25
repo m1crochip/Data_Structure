@@ -1,0 +1,262 @@
+from class_Queue import Queue
+
+class Node:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
+    def getData(self):
+        return self.data
+
+    def getNext(self):
+        return self.next
+
+    def setData(self, data):
+        self.data = data
+
+    def setNext(self, next=None):
+        if next == None:
+            self.next = None
+        else:
+            self.next = next
+
+    def __str__(self):
+        return self.data
+
+
+class LinkedList:
+    def __init__(self, head=None):
+        self.head = head
+
+    def size(self):
+        temp = self.head
+        length = 0
+        while temp != None:
+            length += 1
+            temp = temp.next
+        return length
+
+    def isEmpty(self):
+        return self.size() == 0
+
+    def append(self, data):
+        if(self.head == None):
+            self.head = data
+        else:
+            temp = self.head
+            while True:
+                if temp.next == None:
+                    temp.next = data
+                    break
+                temp = temp.next
+
+    def addHead(self, data):
+        if(self.head == None):
+            self.head = data
+        else:
+            data.next = self.head
+            self.head = data
+
+    def isIn(self, data):
+        temp = self.head
+        found = False
+        while temp != None:
+            if(temp.data == data):
+                found = True
+                break
+            temp = temp.next
+        return found
+
+    def before(self, data):
+        if self.head == None or self.head.data == data:
+            return None
+        else:
+            temp = self.head
+            found = False
+            while temp.next != None:
+                if(temp.next.data == data):
+                    found = True
+                    break
+                temp = temp.next
+            if found:
+                return temp
+            else:
+                return None
+
+    def remove(self, data):
+        dataRef = self.before(data)
+        removedNode = None
+        if dataRef != None:  
+            temp = self.head
+            while temp != dataRef:
+                temp = temp.next
+            removedNode = temp.next
+            temp.next = temp.next.next
+        else:
+            if self.head != None and self.head.data == data:
+                removedNode = self.head
+                self.head = self.head.next
+        return removedNode
+
+    def removeTail(self):
+        tail = None
+        if self.head != None:
+            if self.head.next == None:
+                tail = self.head
+                self.head = None
+            else:
+                temp = self.head
+                while temp.next.next != None:
+                    temp = temp.next
+                tail = temp.next
+                temp.next = None
+        return tail
+
+    def getTail(self):
+        tail = None
+        tail = self.head
+        while tail.next != None:
+            tail = tail.next
+        return tail
+    
+    def getHead(self):
+        tail = self.head
+        if self.head != None:
+            tail = self.head
+        return tail
+
+    def removeHead(self):
+        tail = self.head
+        if self.head != None:
+            self.head = self.head.next
+        return tail
+
+    def __str__(self):
+        temp = self.head
+        str = ''
+        while temp != None:
+            str += temp.data + ' '
+            temp = temp.next
+        return str
+    
+    def insert(self, be4, data, aft):
+        pointer = self.head
+        previous = None
+        after = None
+        while True:
+            if pointer.getData() == be4.getData():
+                previous = pointer.next
+            if pointer.getData() == aft.getData():
+                after = pointer.next
+            if previous != None and after != None:
+                break
+            pointer = pointer.next
+        be4.setNext(data)
+        data.setNext()
+
+
+
+
+
+
+# linklist = LinkedList()
+
+# d = Node('D')
+# c = Node('C', d)
+# b = Node('B', c)
+# a = Node('A', b)
+
+# linklist.append(a)
+# print(linklist.size())
+# f = Node('F')
+# d.setNext(f)
+# print(linklist.size())
+
+# print(linklist)
+
+
+def howmuchichoose(size, percent):
+    return (percent*size)/100
+def show(List):
+    if len(List) == 0:
+        print("List empty")
+    else:
+        for i in range(0,len(List)):
+            print(List[i],end='')
+            print(" ",end='')
+        print('')
+
+LL = LinkedList()
+
+n10 = Node('10')
+n9 = Node('9',n10)
+n8 = Node('8', n9)
+n7 = Node('7', n8)
+n6 = Node('6', n7)
+n5 = Node('5', n6)
+n4 = Node('4', n5)
+n3 = Node('3', n4)
+n2 = Node('2', n3)
+n1 = Node('1', n2)
+LL.append(n1)
+
+
+print(LL)
+
+
+def bottomUp(percent):
+    sizeofLL = LL.size()
+    percent = percent
+
+    length = int(howmuchichoose(sizeofLL, percent))
+
+    keep = []
+    for i in range(0,length):
+        keep.append(LL.removeHead())
+    show(keep) # 1 2 3
+
+    for i in range(0,length):
+        keep[0].setNext() # reset next
+        LL.getTail().setNext(keep[0]) # order next's tail is first on keep
+        keep.pop(0)
+        print("Now Tail is : ",end='')
+        print(LL.getTail())
+        show(keep)
+    print('')
+    print(LL)
+
+def riffle(percent):
+    sizeofLL = LL.size()
+    percent = percent
+    length = int(howmuchichoose(sizeofLL, percent))
+
+    keep = []
+    for i in range(0,length):
+        keep.append(LL.removeHead())
+    
+    print("in keep is : ",end='')
+    show(keep) # 10 1 2 3
+    print("in LL is : ",end='')
+    # LL.append(keep[0])
+    print(LL)
+
+
+
+# bottomUp(30)
+# riffle(60)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
